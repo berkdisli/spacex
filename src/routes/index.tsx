@@ -29,7 +29,7 @@ function Index() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/spacex" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

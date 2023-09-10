@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 import { GiEarthAmerica } from "react-icons/gi";
 
 const Header = () => {

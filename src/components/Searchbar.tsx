@@ -1,34 +1,28 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { IResultProps } from "../types/Home";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface SearchBarProps {
-  placeholder?: string;
-  handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  result : IResultProps[];
+  handler: (searchKey: string) => void;
 }
 
-function SearchBar({placeholder, handler, result }: SearchBarProps)  {
+function SearchBar({ handler }: SearchBarProps) {
   const [findKey, setFindKey] = useState<string>("");
-  const updateState = (event: React.ChangeEvent<HTMLInputElement>)  => {
-    setFindKey(event.target.value)
-    result.filter( element => element.name === findKey )
-    console.log(findKey)
-  }
 
-//   useEffect(() => {
-//     handler(result.filter((character)  =>{return character.name.toUpperCase().match(findKey.toUpperCase())}));
-// }, [findKey]);
+  const updateState = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchKey = event.target.value;
+    setFindKey(searchKey);
+    handler(searchKey); // Call the handler with the search key
+  };
 
   return (
     <div className="search-body">
       <div className="search-container">
         <input
           type="text"
-          placeholder={placeholder}
+          placeholder="Search a name..."
           value={findKey}
-          onChange={e => updateState(e)}
+          onChange={updateState}
           className="search-input"
         />
         <Link to="#" className="search-btn">

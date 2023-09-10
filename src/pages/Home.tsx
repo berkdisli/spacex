@@ -5,15 +5,7 @@ import SearchBar from "../components/Searchbar";
 
 const Home = () => {
   const [result, setResult] = useState<IResultProps[]>([]);
-  const [found, setFound] = useState<boolean>(true);
-
-  const onSearch = (foundLunches: any) => {
-    if (foundLunches.length > 0) {
-      setFound(true);
-    } else if (foundLunches.length === 0) {
-      setFound(false);
-    }
-  };
+  const [filteredResult, setFilteredResult] = useState<IResultProps[]>(result);
 
   useEffect(() => {
     const api = async () => {
@@ -22,17 +14,29 @@ const Home = () => {
       });
       const jsonData = await data.json();
       setResult(jsonData);
+      setFilteredResult(jsonData); // Initialize filteredResult with all results
     };
 
     api();
   }, []);
+
+  const handleSearch = (searchKey: string) => {
+    const filtered = result.filter((element) =>
+      element.name.toUpperCase().includes(searchKey.toUpperCase())
+    );
+    setFilteredResult(filtered);
+  };
+
   return (
     <div className="home" style={{ marginTop: 150 }}>
-      {result && <SearchBar result={result} handler={onSearch} />}
-      {found}
-      {result?.map((element, index) => (
-        <Detail key={index} result={element} />
-      ))}
+      <SearchBar handler={handleSearch} />
+      {filteredResult.length === 0 ? (
+        <p>No results found</p>
+      ) : (
+        filteredResult.map((element, index) => (
+          <Detail key={index} result={element} />
+        ))
+      )}
     </div>
   );
 };

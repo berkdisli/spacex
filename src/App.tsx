@@ -1,9 +1,7 @@
-import Index from './routes'
+import Index from "./routes";
 
-const App : React.FC = () => {
-  return (
-      <Index/>
-  )
-}
+const App: React.FC = () => {
+  return <Index />;
+};
 
-export default App
+export default App;
